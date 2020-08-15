@@ -13,14 +13,14 @@ from pygame import mixer
 
 root = tk.ThemedTk()
 root.get_themes()                 # Returns a list of all themes that can be set
-root.set_theme("radiance")         # Sets an available theme
+root.set_theme("black")         # Sets an available theme
 
 # Fonts - Arial (corresponds to Helvetica), Courier New (Courier), Comic Sans MS, Fixedsys,
 # MS Sans Serif, MS Serif, Symbol, System, Times New Roman (Times), and Verdana
 #
 # Styles - normal, bold, roman, italic, underline, and overstrike.
 
-statusbar = ttk.Label(root, text="Welcome to Melody", relief=SUNKEN, anchor=W, font='Times 10 italic')
+statusbar = ttk.Label(root, text="Welcome to Harmony", relief=SUNKEN, anchor=W, font='Times 10 italic')
 statusbar.pack(side=BOTTOM, fill=X)
 
 # Create the menubar
@@ -60,16 +60,20 @@ subMenu.add_command(label="Exit", command=root.destroy)
 
 
 def about_us():
-    tkinter.messagebox.showinfo('About Melody', 'This is a music player build using Python Tkinter by @attreyabhatt')
+    tkinter.messagebox.showinfo('About Harmony', 'Open Source Python Based Music Player by @ayushmaan_karmokar')
+
+def how_to_use():
+    tkinter.messagebox.showinfo('How to Use!', 'Simple, Click on File>Open and choose the song(s) you want to add. Alternatively you can also drag and drop. \nSelect the music on the left, before using the control buttons. \nCHEERS!')
 
 
 subMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=subMenu)
 subMenu.add_command(label="About Us", command=about_us)
+subMenu.add_command(label="How to Use?", command=how_to_use)
 
 mixer.init()  # initializing the mixer
 
-root.title("Melody")
+root.title("Harmony")
 root.iconbitmap(r'images/melody.ico')
 
 # Root Window - StatusBar, LeftFrame, RightFrame
@@ -82,7 +86,7 @@ leftframe.pack(side=LEFT, padx=30, pady=30)
 playlistbox = Listbox(leftframe)
 playlistbox.pack()
 
-addBtn = ttk.Button(leftframe, text="+ Add", command=browse_file)
+addBtn = ttk.Button(leftframe, text="Add Song(s)", command=browse_file)
 addBtn.pack(side=LEFT)
 
 
@@ -93,14 +97,21 @@ def del_song():
     playlist.pop(selected_song)
 
 
-delBtn = ttk.Button(leftframe, text="- Del", command=del_song)
+delBtn = ttk.Button(leftframe, text="Del Song", command=del_song)
 delBtn.pack(side=LEFT)
 
 rightframe = Frame(root)
 rightframe.pack(pady=30)
 
+#logoframe = PhotoImage(file='images/logo_big.jpg')
+#logoframe.pack()
+
 topframe = Frame(rightframe)
 topframe.pack()
+
+'''logoframe = PhotoImage(file='images/logo_big.png')
+logoframe=Frame(rightframe)
+logoframe.pack()'''
 
 lengthlabel = ttk.Label(topframe, text='Total Length : --:--')
 lengthlabel.pack(pady=5)
@@ -164,15 +175,15 @@ def play_music():
             play_it = playlist[selected_song]
             mixer.music.load(play_it)
             mixer.music.play()
-            statusbar['text'] = "Playing music" + ' - ' + os.path.basename(play_it)
+            statusbar['text'] = "Playing..>" + ' - ' + os.path.basename(play_it)
             show_details(play_it)
         except:
-            tkinter.messagebox.showerror('File not found', 'Melody could not find the file. Please check again.')
+            tkinter.messagebox.showerror('File not found', 'Harmony could not find the file. Please check again.')
 
 
 def stop_music():
     mixer.music.stop()
-    statusbar['text'] = "Music Stopped"
+    statusbar['text'] = "STOP!!"
 
 
 paused = FALSE
@@ -182,12 +193,12 @@ def pause_music():
     global paused
     paused = TRUE
     mixer.music.pause()
-    statusbar['text'] = "Music Paused"
+    statusbar['text'] = "Pause..||"
 
 
 def rewind_music():
     play_music()
-    statusbar['text'] = "Music Rewinded"
+    statusbar['text'] = "Rewind..<<"
 
 
 def set_vol(val):
@@ -216,17 +227,21 @@ def mute_music():
 middleframe = Frame(rightframe)
 middleframe.pack(pady=30, padx=30)
 
+logoframe = PhotoImage(file='images/logo_big.png')
+logoBtn = ttk.Button(middleframe, image=logoframe) #command=play_music
+logoBtn.grid(row=0, column=0, padx=10)
+
 playPhoto = PhotoImage(file='images/play.png')
 playBtn = ttk.Button(middleframe, image=playPhoto, command=play_music)
-playBtn.grid(row=0, column=0, padx=10)
+playBtn.grid(row=0, column=1, padx=10)
 
 stopPhoto = PhotoImage(file='images/stop.png')
 stopBtn = ttk.Button(middleframe, image=stopPhoto, command=stop_music)
-stopBtn.grid(row=0, column=1, padx=10)
+stopBtn.grid(row=0, column=2, padx=10)
 
 pausePhoto = PhotoImage(file='images/pause.png')
 pauseBtn = ttk.Button(middleframe, image=pausePhoto, command=pause_music)
-pauseBtn.grid(row=0, column=2, padx=10)
+pauseBtn.grid(row=0, column=3, padx=10)
 
 # Bottom Frame for volume, rewind, mute etc.
 
