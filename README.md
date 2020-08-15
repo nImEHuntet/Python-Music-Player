@@ -9,4 +9,4 @@ You need the following packaged for the program to run.
  --3. pygame
  
 SCREENSHOT:
-![MeldodyGUI](https://i.imgur.com/bIb1nsM.png)
+![MeldodyGUI](https://i.imgur.com/DaO5oMk.png)
